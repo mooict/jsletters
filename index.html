@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Letter Game - MOO ICT</title>
+
+    <style>
+        body
+        {
+            background-color: #646464;
+            color: white;
+        }
+
+        #container
+        {
+            
+            display: block;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            height: 600px;
+        }
+
+        #container p {
+            font-size: 180pt;
+            position: absolute;
+            top: 30%; 
+            right: 50%;
+            transform: translate(50%,-50%);
+            font-family:Verdana, sans-serif;
+            color:#fff9d6;
+            font-weight:bold;
+            text-shadow: 0px 1px 15px rgba(231,183,183,0.7);
+
+        }
+
+        #particle-area {
+        position: relative;
+        }
+
+        .particle {
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        left: 40%;
+        top: 450px;
+        animation: particle-animation 2s ease-out;
+        }
+
+        .wrong
+        {
+            left: 56%;
+        }
+
+        @keyframes particle-animation {
+        0% {
+            transform: translate(0, 0);
+            opacity: 1;
+        }
+
+        100% {
+            transform: translate(0, -200px);
+            opacity: 0;
+        }
+        }
+
+    </style>
+
+
+</head>
+<body>
+
+        // made by MOO ICT 2025
+
+        <div id="container">
+            <p id="randomLetterDisplay"></p>
+
+            <div id="particle-area"></div>
+        </div>
+        
+    
+        <script>
+
+            const colors = ['#bf94e4', '#ff97a9', '#78ffff', '#ffc898', '#ee4035', '#7bc043', '#0392cf'];
+            const happy = ["😍", "😀", "😂", "😄", "🥳", "😆", "🥰", "😊", "🤣"]
+            const sad = ["😥", "😔", "🙁", "😓", "😢", "😫", "😖", "😩"]
+
+            document.addEventListener('DOMContentLoaded', () => {
+            const randomLetterDisplay = document.getElementById('randomLetterDisplay');
+            let currentRandomLetter = '';
+
+            function generateAndDisplayRandomLetter() {
+                const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                const randomIndex = Math.floor(Math.random() * alphabet.length);
+                const randomColorIndex = Math.floor(Math.random() * colors.length);
+                const randomColor = colors[randomColorIndex];
+                currentRandomLetter = alphabet[randomIndex];
+                randomLetterDisplay.textContent = currentRandomLetter;
+                randomLetterDisplay.style.color = randomColor;
+                randomLetterDisplay.style.textShadow = "0px 1px 15px "+ randomColor + ", -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000";
+            }
+
+            // Initial display of a random letter
+            generateAndDisplayRandomLetter();
+
+            // Event listener for keyboard input
+            document.addEventListener('keydown', (event) => {
+                // Convert both to uppercase for case-insensitive comparison
+                if (event.key.toUpperCase() === currentRandomLetter.toUpperCase()) {
+                    generateAndDisplayRandomLetter();
+                    const particle = createParticle(particleBox, true);
+                    particle.addEventListener("animationend", function() {
+                        particle.remove();
+                    });
+                }
+                else
+                {
+                    const particle = createParticle(particleBox, false);
+                    particle.addEventListener("animationend", function() {
+                        particle.remove();
+                    });
+                }
+            });
+        });
+
+
+
+        function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        let randomSize = 0;
+
+        const particleBox = document.getElementById("particle-area");
+
+        function createParticle(parentElement = document.body, correct = false) {
+        const particle = document.createElement("div");
+        particle.classList.add("particle");
+        if(correct)
+        {
+            randomSize = getRandomInt(40, 60);
+            particle.style.fontSize = randomSize + "pt";
+            particle.innerHTML = "<span>"+ happy[Math.floor(Math.random() * happy.length)] +"</span>";
+            
+        }
+        else
+        {
+            particle.classList.add("wrong");
+            randomSize = getRandomInt(40, 60);
+            particle.style.fontSize = randomSize + "pt";
+            particle.innerHTML = "<span>"+ sad[Math.floor(Math.random() * sad.length)] +"</span>";
+        }
+        if (parentElement) {
+            parentElement.append(particle);
+        }
+        return particle;
+        }
+
+        </script>
+</body>
+</html>
