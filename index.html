@@ -6,9 +6,19 @@
     <title>Typing Letter Game - MOO ICT</title>
 
     <style>
+
+        html, body{
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        /*  https://www.eggradients.com/gradient/night-club  */
+
         body
         {
-            background-color: #646464;
+            background-color: #2d3436;
+            background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
             color: white;
         }
 
@@ -23,11 +33,11 @@
         }
 
         #container p {
-            font-size: 180pt;
+            font-size: 200pt;
             position: absolute;
-            top: 30%; 
-            right: 50%;
-            transform: translate(50%,-50%);
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             font-family:Verdana, sans-serif;
             color:#fff9d6;
             font-weight:bold;
@@ -36,21 +46,25 @@
         }
 
         #particle-area {
-        position: relative;
+            height: 100px;
+            width: 400px;
+            position: absolute;
+            bottom: -100px;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
         .particle {
         width: 30px;
         height: 30px;
         position: absolute;
-        left: 40%;
-        top: 450px;
+        left: -30px;
         animation: particle-animation 2s ease-out;
         }
 
         .wrong
         {
-            left: 56%;
+            left: 350px;
         }
 
         @keyframes particle-animation {
@@ -65,15 +79,47 @@
         }
         }
 
+        #info
+        {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-weight: bold;
+            font-size: 28pt;
+            width: 600px;
+            position: relative;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+        }
+
+        #correct
+        {
+            color: limegreen;
+            position: absolute;
+            left: 0px;
+        }
+        
+        #wrong
+        {
+            color: coral;
+            position: absolute;
+            right: 0px;
+        }
+
+
     </style>
 
 
 </head>
 <body>
 
-        // made by MOO ICT 2025
+       
 
         <div id="container">
+
+
+            <div id="info"><span id="correct">Correct: 0</span> <span id="wrong">Incorrect: 0</span></div>
+
             <p id="randomLetterDisplay"></p>
 
             <div id="particle-area"></div>
@@ -82,9 +128,14 @@
     
         <script>
 
+             // made by MOO ICT 2025
+
             const colors = ['#bf94e4', '#ff97a9', '#78ffff', '#ffc898', '#ee4035', '#7bc043', '#0392cf'];
             const happy = ["😍", "😀", "😂", "😄", "🥳", "😆", "🥰", "😊", "🤣"]
             const sad = ["😥", "😔", "🙁", "😓", "😢", "😫", "😖", "😩"]
+
+            let correct = 0;
+            let incorrect = 0;
 
             document.addEventListener('DOMContentLoaded', () => {
             const randomLetterDisplay = document.getElementById('randomLetterDisplay');
@@ -113,6 +164,8 @@
                     particle.addEventListener("animationend", function() {
                         particle.remove();
                     });
+
+                    correct++;
                 }
                 else
                 {
@@ -120,7 +173,14 @@
                     particle.addEventListener("animationend", function() {
                         particle.remove();
                     });
+
+                    incorrect++;
                 }
+
+                document.getElementById("correct").innerHTML = "Correct: " + correct;
+                document.getElementById("wrong").innerHTML = "Incorrect: " + incorrect;
+
+
             });
         });
 
