@@ -106,7 +106,6 @@
             right: 0px;
         }
 
-
     </style>
 
 
@@ -129,6 +128,10 @@
         <script>
 
              // made by MOO ICT 2025
+
+            let win = new Audio('win.mp3');
+            //audio.play();
+            let lose = new Audio("lose.mp3");
 
             const colors = ['#bf94e4', '#ff97a9', '#78ffff', '#ffc898', '#ee4035', '#7bc043', '#0392cf'];
             const happy = ["😍", "😀", "😂", "😄", "🥳", "😆", "🥰", "😊", "🤣"]
@@ -166,6 +169,7 @@
                     });
 
                     correct++;
+                    win.play();
                 }
                 else
                 {
@@ -175,6 +179,7 @@
                     });
 
                     incorrect++;
+                    lose.play();
                 }
 
                 document.getElementById("correct").innerHTML = "Correct: " + correct;
